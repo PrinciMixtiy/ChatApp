@@ -1,0 +1,81 @@
+{% if messages %}
+<ul class="pagination justify-content-center">
+    {% if messages.has_previous %}
+        <li class="page-item">
+            <a hx-get="?page={{ messages.previous_page_number }}"
+               hx-target='#messages'
+               hx-push-url='./?page={{ messages.previous_page_number }}'
+               style='cursor: pointer;'
+               class='page-link'>&laquo;</a>
+        </li>
+        <li class="page-item">
+            <a hx-get="?page=1"
+               hx-target='#messages'
+               hx-push-url='./?page=1'
+               style='cursor: pointer;'
+               class='page-link'>first</a>
+        </li>
+    {% endif %}
+
+    {% if messages.has_next %}
+        <li class='page-item'>
+            <a hx-get="?page={{ messages.paginator.num_pages }}"
+               hx-target='#messages'
+               hx-push-url='./?page={{ messages.paginator.num_pages }}'
+               style='cursor: pointer;'
+               class='page-link'>last</a>
+        </li>
+        <li class="page-item">
+            <a hx-get="?page={{ messages.next_page_number }}"
+               hx-target='#messages'
+               hx-push-url='./?page={{ messages.next_page_number }}'
+               style='cursor: pointer;'
+               class='page-link'>&raquo;</a>
+        </li>
+    {% endif %}
+</ul>
+
+    {% for message in messages %}
+        {% if message.author == user %}
+            <div class="d-flex justify-content-end  my-2">
+                <div class="d-flex flex-column align-items-end">
+                    <p class='text-bg-primary rounded p-2 mb-0'
+                        style="max-width: 400px;"
+                    >
+                        {{ message.content }}
+                    </p>
+                    <p class="bg-light rounded p-1 small tex-muted text-end w-auto"
+                        style="max-width: 160px;"
+                    >
+                        {{ message.timestamp }}
+                    </p>
+                </div>
+                <div class='bg-dark mx-2'
+                style='min-width: 40px; max-width: 40px; max-height: 40px; min-height: 40px; border-radius: 20px;'>
+                </div>
+            </div>
+        {% else %}
+            <div class="d-flex justify-content-start my-2">
+                <div class='bg-dark mx-2'
+                        style='min-width: 40px; max-width: 40px; max-height: 40px; min-height: 40px; border-radius: 20px;'>
+                </div>
+                <div class="d-flex flex-column align-items-start">
+                    <p class='text-bg-light rounded p-2 mb-0'
+                        style="max-width: 400px;"
+                    >
+                        {{ message.content }}
+                    </p>
+                    <p class="bg-light rounded p-1 small tex-muted text-end w-auto"
+                        style="max-width: 160px;"
+                    >
+                        {{ message.timestamp }}
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<script>
+    scrollToBottom('messages');
+</script>

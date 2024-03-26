@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{% url 'accounts:sign-up' %}" method="post"
+      style='max-width: 400px;'
+      class="mx-auto my-3 border p-2 rounded"
+      autocomplete="off"
+>
+    {% csrf_token %}
+    <h1 class="text-center">Sing Up</h1>
+    {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <label for="username" class="form-label">Username</label>
+    <input type="text" name="username" id="username" class="form-control">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" name="email" id="email" class="form-control">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" name="password" id="password" class="form-control">
+
+    <input type="submit" value="Sing Up" class="btn btn-primary m-2">
+
+    <div class="form-text">
+        You already have an account? <a href="{% url 'accounts:sign-in' %}">Login.</a>
+    </div>
+</form>
+
+{% endblock content %}

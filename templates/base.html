@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <script src="{% static "js/htmx.min.js" %}"></script>
+    <script src="{% static "js/ws.js" %}"></script>
+    <title>Chat Room</title>
+    {% block head_add %}{% endblock head_add %}
+</head>
+<body>
+    {% block content %}
+        <h1 class="display-1">Base Template</h1>
+    {% endblock content %}
+    <script src="{% static "js/bootstrap.bundle.js" %}"></script>
+    <script>
+        document.body.addEventListener('htmx:configRequest', (evt) => {
+            evt.detail.headers['X-CSRFToken'] = "{{ csrf_token }}";
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<section id="messages">
+    {% include "chat/partials/message-list.html" %}
+</section>
+<section hx-ext='ws'
+         ws-connect='/ws/chat/{{ receiver.pk }}/'
+>
+    <form id="message-form" class='d-flex'
+          ws-send="/ws/chat/{{ receiver.pk }}/"
+    >
+        {% csrf_token %}
+        <input type="text" name="message" id="message" class="form-control"
+            placeholder='message ...'>
+        <input type="submit" value="Send" class="btn btn-primary mx-2">
+    </form>
+</section>
+
+<script>
+
+    function scrollToBottom(id) {
+        var el = document.getElementById(id);
+        el.scrollTop = el.scrollHeight;
+    }
+
+    let message_form = document.getElementById('message-form');
+    let message_input = document.getElementById('message');
+    message_form.addEventListener('htmx:wsAfterSend', (e) => {
+        message_input.value = '';
+        scrollToBottom('messages');
+    });
+
+</script>

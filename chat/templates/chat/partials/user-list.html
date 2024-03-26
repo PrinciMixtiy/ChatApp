@@ -1,0 +1,22 @@
+{% if users %}
+{% for user in users %}
+    <div class='d-flex align-items-center flex-column flex-sm-row user-container'   
+    >
+        <div class='bg-light m-2'
+            style='min-width: 50px; min-height: 50px; border-radius: 25px;'>
+        </div>
+        <div class='align-self-center'>
+            <p class="m-0">
+                <a hx-get="{% url "chat:room" user.pk %}"
+                    hx-trigger='click'
+                    hx-target='#room'
+                    hx-push-url='/chat/room/{{ user.id }}/'
+                    class='link-light nav-link'
+                    style='cursor: pointer;'>
+                    {{ user.username }}
+                </a>
+            </p>
+        </div>
+    </div>
+{% endfor %}
+{% endif %}
